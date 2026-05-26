@@ -5,7 +5,7 @@ from google import genai
 
 # 1. Setup Gemini API Client
 # Replace with your actual Gemini API key
-client = genai.Client(api_key="AIzaSyBnQdexc9cxYVqWDT8djxUk5Xnv_L0XQ8g")
+client = genai.Client(api_key="")
 
 # 2. Setup Serial Communication with Arduino
 # Change 'COM3' to whatever port your Arduino is using (e.g., '/dev/ttyUSB0' on Linux/Mac)
