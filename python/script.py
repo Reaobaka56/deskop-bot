@@ -1,16 +1,26 @@
+import os
 import time
 import serial
 import speech_recognition as sr
+from dotenv import load_dotenv
 from google import genai
 
+# Load environment variables from .env file
+load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
+
 # 1. Setup Gemini API Client
-# Replace with your actual Gemini API key
-client = genai.Client(api_key="")
+api_key = os.getenv("GEMINI_API_KEY")
+if not api_key:
+    print("ERROR: GEMINI_API_KEY is not set in the .env file.")
+    exit(1)
+client = genai.Client(api_key=api_key)
 
 # 2. Setup Serial Communication with Arduino
-# Change 'COM3' to whatever port your Arduino is using (e.g., '/dev/ttyUSB0' on Linux/Mac)
+port = os.getenv("ARDUINO_PORT", "COM5")
+baud_rate = int(os.getenv("BAUD_RATE", "9600"))
+
 try:
-    arduino = serial.Serial(port='COM5', baudrate=9600, timeout=1)
+    arduino = serial.Serial(port=port, baudrate=baud_rate, timeout=1)
     time.sleep(2) # Give the Arduino time to reset/initialize
     print("Connected to Arduino successfully!")
 except Exception as e:
